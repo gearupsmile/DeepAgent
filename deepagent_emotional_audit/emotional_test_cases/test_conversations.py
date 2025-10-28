@@ -198,3 +198,49 @@ def get_test_case(case_id):
 def get_all_test_cases():
     """Get all test cases"""
     return EMOTIONAL_TEST_CASES
+
+
+"""
+Test conversations for emotional audit with task outcomes
+"""
+
+"""
+Test conversations for emotional audit with clear task outcomes
+"""
+
+"""
+Test conversations for emotional audit with clear emotional content and task outcomes
+"""
+
+def load_test_conversations():
+    """Load test conversations with original and compressed versions"""
+    return [
+        {
+            'id': 'customer_support_frustration',
+            'original': "I'm really frustrated and angry that my account isn't working! I've been trying for hours and this is making me so upset. I need help immediately!",
+            'compressed': "Account not working.",
+            'task_type': 'customer_support',
+            'expected_outcome': 'resolution'
+        },
+        {
+            'id': 'project_excitement', 
+            'original': "I'm absolutely thrilled and excited about our new project timeline! The team is very happy and motivated to deliver outstanding results. We're confident we can meet all deadlines!",
+            'compressed': "Project timeline.",
+            'task_type': 'project_planning',
+            'expected_outcome': 'team_motivation'
+        },
+        {
+            'id': 'budget_concern',
+            'original': "I'm quite concerned and worried about the budget constraints. I'm nervous we might not reach an agreement that works for both parties. This is making me anxious.",
+            'compressed': "Budget issues.",
+            'task_type': 'negotiation',
+            'expected_outcome': 'agreement'
+        },
+        {
+            'id': 'creative_energy',
+            'original': "This idea is absolutely amazing! I'm so excited and thrilled about the possibilities. The creative energy in this room is incredible and wonderful!",
+            'compressed': "Brainstorming ideas.",
+            'task_type': 'brainstorming',
+            'expected_outcome': 'creativity'
+        }
+    ]

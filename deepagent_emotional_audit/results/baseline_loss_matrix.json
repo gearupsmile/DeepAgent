@@ -1,0 +1,58 @@
+{
+  "customer_support_frustration": {
+    "overall_loss": 0.6055,
+    "dimensional_loss": {
+      "anger": 1.0,
+      "frustration": 0.21100000000000008
+    },
+    "signal_preservation": {
+      "preservation_rate": 0.5,
+      "preserved_count": 1,
+      "total_signals": 2
+    }
+  },
+  "project_excitement": {
+    "overall_loss": 0.1585,
+    "dimensional_loss": {
+      "joy": 0.5,
+      "trust": 0.03200000000000003,
+      "anticipation": 0.043999999999999984,
+      "excitement": 0.31100000000000005,
+      "satisfaction": 0.03200000000000003,
+      "confidence": 0.03200000000000003
+    },
+    "signal_preservation": {
+      "preservation_rate": 0.8333333333333334,
+      "preserved_count": 5,
+      "total_signals": 6
+    }
+  },
+  "budget_concern": {
+    "overall_loss": 1.0,
+    "dimensional_loss": {
+      "fear": 1.0
+    },
+    "signal_preservation": {
+      "preservation_rate": 0.0,
+      "preserved_count": 0,
+      "total_signals": 1
+    }
+  },
+  "creative_energy": {
+    "overall_loss": 0.34800000000000003,
+    "dimensional_loss": {
+      "joy": 0.5,
+      "anticipation": 0.043999999999999984,
+      "excitement": 0.5
+    },
+    "signal_preservation": {
+      "preservation_rate": 0.3333333333333333,
+      "preserved_count": 1,
+      "total_signals": 3
+    }
+  },
+  "_metadata": {
+    "timestamp": "2025-10-28T22:09:12.621682",
+    "filename": "baseline_loss_matrix.json"
+  }
+}

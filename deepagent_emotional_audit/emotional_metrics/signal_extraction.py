@@ -1,129 +1,109 @@
 """
-Emotional signal extraction from conversation text
-Simple rule-based and keyword-based approach
+Improved emotional signal extraction that works better for compressed text
 """
 
-def extract_emotional_signals(conversation):
+import re
+
+def extract_emotional_signals(text):
     """
-    Extract emotional signals from conversation text
-    Returns dict of emotional metrics
+    Extract emotional signals from text using improved keyword matching
     """
-    full_text = ' '.join(conversation)
+    if not text or not isinstance(text, str):
+        return {'neutral': 0.5}
     
-    signals = {
-        'emotional_keywords': extract_emotional_keywords(full_text),
-        'sentiment_trend': calculate_sentiment_trend(conversation),
-        'urgency_indicators': detect_urgency_indicators(full_text),
-        'frustration_level': detect_frustration_level(full_text),
-        'confidence_indicators': detect_confidence_indicators(full_text),
-        'rapport_indicators': detect_rapport_indicators(full_text)
+    text_lower = text.lower()
+    signals = {}
+    
+    # Enhanced emotional keyword matching with weights
+    emotional_keywords = {
+        'joy': {
+            'keywords': ['happy', 'excited', 'great', 'wonderful', 'amazing', 'love', 'fantastic', 'good', 'nice', 'thrilled'],
+            'weight': 0.8
+        },
+        'sadness': {
+            'keywords': ['sad', 'unhappy', 'disappointed', 'sorry', 'regret', 'unfortunate', 'bad'],
+            'weight': 0.7
+        },
+        'anger': {
+            'keywords': ['angry', 'mad', 'frustrated', 'annoyed', 'outrage', 'furious', 'upset'],
+            'weight': 0.9
+        },
+        'fear': {
+            'keywords': ['scared', 'afraid', 'worried', 'concerned', 'anxious', 'nervous', 'fear'],
+            'weight': 0.8
+        },
+        'surprise': {
+            'keywords': ['surprised', 'shocked', 'amazed', 'unexpected', 'astonished'],
+            'weight': 0.6
+        },
+        'trust': {
+            'keywords': ['trust', 'confident', 'believe', 'reliable', 'dependable'],
+            'weight': 0.7
+        },
+        'anticipation': {
+            'keywords': ['excited', 'looking forward', 'anticipate', 'expect', 'waiting', 'hope'],
+            'weight': 0.6
+        },
+        'excitement': {
+            'keywords': ['excited', 'thrilled', 'eager', 'enthusiastic', 'pumped', 'energy'],
+            'weight': 0.8
+        },
+        'frustration': {
+            'keywords': ['frustrated', 'annoyed', 'irritated', 'displeased', 'upset'],
+            'weight': 0.8
+        },
+        'satisfaction': {
+            'keywords': ['satisfied', 'pleased', 'content', 'happy', 'good', 'great'],
+            'weight': 0.7
+        },
+        'confusion': {
+            'keywords': ['confused', 'unsure', 'uncertain', 'puzzled', 'bewildered'],
+            'weight': 0.6
+        },
+        'confidence': {
+            'keywords': ['confident', 'sure', 'certain', 'definite', 'positive'],
+            'weight': 0.7
+        }
     }
+    
+    # Count emotional words and calculate intensity
+    for emotion, data in emotional_keywords.items():
+        keywords = data['keywords']
+        base_weight = data['weight']
+        
+        count = sum(1 for keyword in keywords if re.search(r'\b' + re.escape(keyword) + r'\b', text_lower))
+        
+        if count > 0:
+            # Base intensity from keyword count
+            intensity = min(0.3 + (count * 0.15), 1.0) * base_weight
+            
+            # Check for intensity modifiers
+            intensifiers = ['very', 'really', 'extremely', 'incredibly', 'absolutely', 'so']
+            reducers = ['slightly', 'a bit', 'somewhat', 'mildly', 'little']
+            
+            for intensifier in intensifiers:
+                if re.search(r'\b' + re.escape(intensifier) + r'\b', text_lower):
+                    intensity = min(intensity * 1.3, 1.0)
+            
+            for reducer in reducers:
+                if re.search(r'\b' + re.escape(reducer) + r'\b', text_lower):
+                    intensity = max(intensity * 0.7, 0.1)
+            
+            signals[emotion] = round(intensity, 3)
+    
+    # For very short/compressed text, try to infer emotions from context
+    if len(text.split()) <= 3 and not signals:
+        if any(word in text_lower for word in ['not working', 'broken', 'error', 'issue']):
+            signals['frustration'] = 0.6
+        elif any(word in text_lower for word in ['excited', 'thrilled', 'great']):
+            signals['excitement'] = 0.6
+        elif any(word in text_lower for word in ['concern', 'worry', 'problem']):
+            signals['fear'] = 0.6
+        elif any(word in text_lower for word in ['happy', 'good', 'nice']):
+            signals['joy'] = 0.6
+    
+    # If no emotions detected, return neutral baseline
+    if not signals:
+        signals['neutral'] = 0.5
     
     return signals
-
-def extract_emotional_keywords(text):
-    """Detect emotional keywords in text"""
-    emotion_keywords = {
-        'frustration': ['frustrating', 'annoying', 'unacceptable', 'ridiculous', 'useless'],
-        'anger': ['angry', 'mad', 'furious', 'outrageous', 'complaint'],
-        'sarcasm': ['brilliant', 'great', 'wonderful', 'fantastic', 'perfect'],  # Often sarcastic in complaints
-        'anxiety': ['unsure', 'nervous', 'anxious', 'worried', 'concerned', 'what if'],
-        'urgency': ['immediately', 'right now', 'urgent', 'asap', 'emergency', 'critical'],
-        'pride': ['proud', 'achievement', 'accomplished', 'success', 'finished'],
-        'gratitude': ['thank you', 'thanks', 'appreciate', 'helpful', 'grateful'],
-        'confusion': ['confused', 'not sure', 'don\'t know', 'uncertain', 'which one'],
-        'overwhelm': ['overwhelmed', 'too much', 'complicated', 'complex', 'too many'],
-        'impatience': ['how long', 'taking forever', 'slow', 'hurry up', 'waiting']
-    }
-    
-    detected = {}
-    text_lower = text.lower()
-    
-    for emotion, keywords in emotion_keywords.items():
-        count = sum(1 for keyword in keywords if keyword in text_lower)
-        if count > 0:
-            detected[emotion] = count
-    
-    return detected
-
-def calculate_sentiment_trend(conversation):
-    """Simple sentiment trend across conversation turns"""
-    sentiment_scores = []
-    
-    for turn in conversation:
-        if any(word in turn.lower() for word in ['thank', 'appreciate', 'great', 'good', 'perfect']):
-            sentiment_scores.append(1)
-        elif any(word in turn.lower() for word in ['frustrat', 'angry', 'mad', 'disappoint', 'bad']):
-            sentiment_scores.append(-1)
-        else:
-            sentiment_scores.append(0)
-    
-    if len(sentiment_scores) < 2:
-        return 'neutral'
-    
-    # Check trend
-    if sentiment_scores[-1] > sentiment_scores[0]:
-        return 'improving'
-    elif sentiment_scores[-1] < sentiment_scores[0]:
-        return 'worsening'
-    else:
-        return 'stable'
-
-def detect_urgency_indicators(text):
-    """Detect urgency in conversation"""
-    urgent_phrases = ['right now', 'immediately', 'asap', 'emergency', 'critical', 'urgent']
-    text_lower = text.lower()
-    
-    urgency_score = sum(1 for phrase in urgent_phrases if phrase in text_lower)
-    
-    if urgency_score >= 2:
-        return 'high'
-    elif urgency_score == 1:
-        return 'medium'
-    else:
-        return 'low'
-
-def detect_frustration_level(text):
-    """Detect frustration level"""
-    frustration_words = ['frustrat', 'annoying', 'ridiculous', 'useless', 'stupid', 'hate']
-    text_lower = text.lower()
-    
-    frustration_count = sum(1 for word in frustration_words if word in text_lower)
-    
-    if frustration_count >= 3:
-        return 'high'
-    elif frustration_count >= 1:
-        return 'medium'
-    else:
-        return 'low'
-
-def detect_confidence_indicators(text):
-    """Detect user confidence level"""
-    low_confidence = ['unsure', 'not sure', 'don\'t know', 'maybe', 'perhaps', 'could be']
-    high_confidence = ['certain', 'definitely', 'sure', 'know', 'confident']
-    
-    text_lower = text.lower()
-    
-    low_count = sum(1 for phrase in low_confidence if phrase in text_lower)
-    high_count = sum(1 for phrase in high_confidence if phrase in text_lower)
-    
-    if low_count > high_count:
-        return 'low'
-    elif high_count > low_count:
-        return 'high'
-    else:
-        return 'neutral'
-
-def detect_rapport_indicators(text):
-    """Detect rapport-building language"""
-    rapport_phrases = ['thank you', 'please', 'appreciate', 'helpful', 'good job', 'thanks']
-    text_lower = text.lower()
-    
-    rapport_score = sum(1 for phrase in rapport_phrases if phrase in text_lower)
-    
-    if rapport_score >= 2:
-        return 'strong'
-    elif rapport_score == 1:
-        return 'moderate'
-    else:
-        return 'weak'

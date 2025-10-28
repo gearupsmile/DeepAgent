@@ -1,50 +1,72 @@
 """
-Calculate emotional context loss between original and compressed
+Fixed emotional loss calculation that handles missing emotions
 """
 
-def calculate_emotional_loss(original_signals, compressed_signals, ground_truth):
+def calculate_emotional_loss(original_signals, compressed_signals):
     """
-    Calculate emotional context loss
+    Calculate emotional context loss between original and compressed versions
+    Handles cases where emotions are missing in compressed version
     """
-    losses = {}
+    dimensional_loss = {}
     
-    # 1. Emotional keyword loss
-    original_emotions = set(original_signals.get('emotional_keywords', {}).keys())
-    compressed_emotions = set(compressed_signals.get('emotional_keywords', {}).keys())
+    # If compressed only has neutral, we need to calculate loss for all original emotions
+    has_only_neutral = len(compressed_signals) == 1 and 'neutral' in compressed_signals
     
-    emotion_overlap = len(original_emotions.intersection(compressed_emotions))
-    emotion_union = len(original_emotions.union(compressed_emotions))
+    for dimension, orig_val in original_signals.items():
+        if dimension in compressed_signals:
+            # Emotion exists in both - calculate direct loss
+            comp_val = compressed_signals[dimension]
+            loss = abs(orig_val - comp_val)
+        elif has_only_neutral:
+            # Emotion missing in compressed - treat as complete loss for that emotion
+            # Neutral (0.5) vs strong emotion (0.8) = loss of 0.3
+            comp_val = compressed_signals['neutral']
+            loss = abs(orig_val - comp_val)
+        else:
+            # Emotion completely missing - maximum loss
+            loss = 1.0
+        
+        dimensional_loss[dimension] = loss
     
-    if emotion_union > 0:
-        losses['emotion_detection'] = 1 - (emotion_overlap / emotion_union)
+    # Calculate overall loss
+    if dimensional_loss:
+        overall_loss = sum(dimensional_loss.values()) / len(dimensional_loss)
     else:
-        losses['emotion_detection'] = 0.0
+        # If no emotions to compare, no loss
+        overall_loss = 0
     
-    # 2. Sentiment trend loss
-    original_trend = original_signals.get('sentiment_trend', 'neutral')
-    compressed_trend = compressed_signals.get('sentiment_trend', 'neutral')
-    losses['sentiment_trend'] = 0.0 if original_trend == compressed_trend else 1.0
+    return {
+        'overall_loss': overall_loss,
+        'dimensional_loss': dimensional_loss,
+        'signal_preservation': calculate_signal_preservation(original_signals, compressed_signals)
+    }
+
+def calculate_signal_preservation(original, compressed):
+    """Calculate what percentage of emotional signals were preserved"""
+    preserved_count = 0
+    total_signals = len(original)
     
-    # 3. Urgency detection loss
-    original_urgency = original_signals.get('urgency_indicators', 'low')
-    compressed_urgency = compressed_signals.get('urgency_indicators', 'low')
-    losses['urgency_detection'] = 0.0 if original_urgency == compressed_urgency else 1.0
+    # If compressed only has neutral, consider it as partial preservation
+    has_only_neutral = len(compressed) == 1 and 'neutral' in compressed
     
-    # 4. Frustration level loss
-    original_frustration = original_signals.get('frustration_level', 'low')
-    compressed_frustration = compressed_signals.get('frustration_level', 'low')
-    frustration_map = {'low': 0, 'medium': 0.5, 'high': 1.0}
+    for dim, orig_val in original.items():
+        if dim in compressed:
+            comp_val = compressed[dim]
+            # Consider preserved if within 30% of original value
+            if abs(orig_val - comp_val) <= 0.3:
+                preserved_count += 1
+        elif has_only_neutral:
+            # With neutral compression, check if emotion is somewhat preserved
+            comp_val = compressed['neutral']
+            if abs(orig_val - comp_val) <= 0.4:  # More lenient for neutral
+                preserved_count += 1
+        # Else: emotion completely missing, not preserved
     
-    original_score = frustration_map.get(original_frustration, 0)
-    compressed_score = frustration_map.get(compressed_frustration, 0)
-    losses['frustration_level'] = abs(original_score - compressed_score)
-    
-    # 5. Check if required emotional response is preserved
-    required_tone = ground_truth.get('required_response_tone', 'neutral')
-    # This would need actual response analysis - placeholder for now
-    losses['response_appropriateness'] = 0.5  # Placeholder
-    
-    return losses
+    return {
+        'preservation_rate': preserved_count / total_signals if total_signals > 0 else 0,
+        'preserved_count': preserved_count,
+        'total_signals': total_signals
+    }
 
 def aggregate_emotional_loss(loss_dict):
     """

@@ -1,0 +1,252 @@
+{
+  "baseline_analysis": [
+    {
+      "overall_loss": 0.6055,
+      "dimensional_loss": {
+        "anger": 1.0,
+        "frustration": 0.21100000000000008
+      },
+      "signal_preservation": {
+        "preservation_rate": 0.5,
+        "preserved_count": 1,
+        "total_signals": 2
+      },
+      "conversation_id": "customer_support_frustration"
+    },
+    {
+      "overall_loss": 0.1585,
+      "dimensional_loss": {
+        "joy": 0.5,
+        "trust": 0.03200000000000003,
+        "anticipation": 0.043999999999999984,
+        "excitement": 0.31100000000000005,
+        "satisfaction": 0.03200000000000003,
+        "confidence": 0.03200000000000003
+      },
+      "signal_preservation": {
+        "preservation_rate": 0.8333333333333334,
+        "preserved_count": 5,
+        "total_signals": 6
+      },
+      "conversation_id": "project_excitement"
+    },
+    {
+      "overall_loss": 1.0,
+      "dimensional_loss": {
+        "fear": 1.0
+      },
+      "signal_preservation": {
+        "preservation_rate": 0.0,
+        "preserved_count": 0,
+        "total_signals": 1
+      },
+      "conversation_id": "budget_concern"
+    },
+    {
+      "overall_loss": 0.34800000000000003,
+      "dimensional_loss": {
+        "joy": 0.5,
+        "anticipation": 0.043999999999999984,
+        "excitement": 0.5
+      },
+      "signal_preservation": {
+        "preservation_rate": 0.3333333333333333,
+        "preserved_count": 1,
+        "total_signals": 3
+      },
+      "conversation_id": "creative_energy"
+    }
+  ],
+  "task_impact_analysis": [
+    {
+      "conversation_id": "customer_support_frustration",
+      "task_success_rate": {
+        "original_success": false,
+        "compressed_success": null,
+        "success_rate": 0.5,
+        "task_failure": false,
+        "task_type": "customer_support"
+      },
+      "emotional_loss": 0.6055,
+      "dimensional_loss": {
+        "anger": 1.0,
+        "frustration": 0.21100000000000008
+      },
+      "correlation": 0.0
+    },
+    {
+      "conversation_id": "project_excitement",
+      "task_success_rate": {
+        "original_success": true,
+        "compressed_success": true,
+        "success_rate": 0.4,
+        "task_failure": false,
+        "task_type": "project_planning"
+      },
+      "emotional_loss": 0.1585,
+      "dimensional_loss": {
+        "joy": 0.5,
+        "trust": 0.03200000000000003,
+        "anticipation": 0.043999999999999984,
+        "excitement": 0.31100000000000005,
+        "satisfaction": 0.03200000000000003,
+        "confidence": 0.03200000000000003
+      },
+      "correlation": 0.0
+    },
+    {
+      "conversation_id": "budget_concern",
+      "task_success_rate": {
+        "original_success": true,
+        "compressed_success": null,
+        "success_rate": 0.5,
+        "task_failure": false,
+        "task_type": "negotiation"
+      },
+      "emotional_loss": 1.0,
+      "dimensional_loss": {
+        "fear": 1.0
+      },
+      "correlation": 0.0
+    },
+    {
+      "conversation_id": "creative_energy",
+      "task_success_rate": {
+        "original_success": true,
+        "compressed_success": null,
+        "success_rate": 0.5,
+        "task_failure": false,
+        "task_type": "brainstorming"
+      },
+      "emotional_loss": 0.34800000000000003,
+      "dimensional_loss": {
+        "joy": 0.5,
+        "anticipation": 0.043999999999999984,
+        "excitement": 0.5
+      },
+      "correlation": 0.0
+    }
+  ],
+  "dimension_impact": {
+    "anger": 0.0,
+    "frustration": 0.0,
+    "joy": 0.0,
+    "trust": 0.0,
+    "anticipation": 0.0,
+    "excitement": 0.0,
+    "satisfaction": 0.0,
+    "confidence": 0.0,
+    "fear": 0.0
+  },
+  "comparative_analysis": {
+    "combined_data": [
+      {
+        "overall_loss": 0.6055,
+        "dimensional_loss": {
+          "anger": 1.0,
+          "frustration": 0.21100000000000008
+        },
+        "signal_preservation": {
+          "preservation_rate": 0.5,
+          "preserved_count": 1,
+          "total_signals": 2
+        },
+        "conversation_id": "customer_support_frustration",
+        "task_success_rate": {
+          "original_success": false,
+          "compressed_success": null,
+          "success_rate": 0.5,
+          "task_failure": false,
+          "task_type": "customer_support"
+        },
+        "emotional_loss": 0.6055,
+        "correlation": 0.0
+      },
+      {
+        "overall_loss": 0.1585,
+        "dimensional_loss": {
+          "joy": 0.5,
+          "trust": 0.03200000000000003,
+          "anticipation": 0.043999999999999984,
+          "excitement": 0.31100000000000005,
+          "satisfaction": 0.03200000000000003,
+          "confidence": 0.03200000000000003
+        },
+        "signal_preservation": {
+          "preservation_rate": 0.8333333333333334,
+          "preserved_count": 5,
+          "total_signals": 6
+        },
+        "conversation_id": "project_excitement",
+        "task_success_rate": {
+          "original_success": true,
+          "compressed_success": true,
+          "success_rate": 0.4,
+          "task_failure": false,
+          "task_type": "project_planning"
+        },
+        "emotional_loss": 0.1585,
+        "correlation": 0.0
+      },
+      {
+        "overall_loss": 1.0,
+        "dimensional_loss": {
+          "fear": 1.0
+        },
+        "signal_preservation": {
+          "preservation_rate": 0.0,
+          "preserved_count": 0,
+          "total_signals": 1
+        },
+        "conversation_id": "budget_concern",
+        "task_success_rate": {
+          "original_success": true,
+          "compressed_success": null,
+          "success_rate": 0.5,
+          "task_failure": false,
+          "task_type": "negotiation"
+        },
+        "emotional_loss": 1.0,
+        "correlation": 0.0
+      },
+      {
+        "overall_loss": 0.34800000000000003,
+        "dimensional_loss": {
+          "joy": 0.5,
+          "anticipation": 0.043999999999999984,
+          "excitement": 0.5
+        },
+        "signal_preservation": {
+          "preservation_rate": 0.3333333333333333,
+          "preserved_count": 1,
+          "total_signals": 3
+        },
+        "conversation_id": "creative_energy",
+        "task_success_rate": {
+          "original_success": true,
+          "compressed_success": null,
+          "success_rate": 0.5,
+          "task_failure": false,
+          "task_type": "brainstorming"
+        },
+        "emotional_loss": 0.34800000000000003,
+        "correlation": 0.0
+      }
+    ],
+    "overall_correlation": {
+      "emotional_loss_task_failure_correlation": 0.0,
+      "analysis": "Positive correlation indicates emotional loss contributes to task failure"
+    },
+    "critical_thresholds": {
+      "average_loss_task_failure": 0,
+      "max_loss_task_failure": 0,
+      "min_loss_task_failure": 0,
+      "critical_threshold": 0.5
+    },
+    "high_impact_cases": []
+  },
+  "_metadata": {
+    "timestamp": "2025-10-28T22:09:12.623313",
+    "filename": "emotional_audit_results.json"
+  }
+}
