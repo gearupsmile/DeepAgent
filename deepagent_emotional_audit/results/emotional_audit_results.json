@@ -11,55 +11,55 @@
         "preserved_count": 1,
         "total_signals": 2
       },
-      "conversation_id": "customer_support_frustration"
+      "conversation_id": "customer_support_failure"
     },
     {
-      "overall_loss": 0.1585,
+      "overall_loss": 0.7443333333333334,
       "dimensional_loss": {
-        "joy": 0.5,
-        "trust": 0.03200000000000003,
-        "anticipation": 0.043999999999999984,
-        "excitement": 0.31100000000000005,
-        "satisfaction": 0.03200000000000003,
-        "confidence": 0.03200000000000003
+        "joy": 0.64,
+        "trust": 1.0,
+        "anticipation": 0.186,
+        "excitement": 0.64,
+        "satisfaction": 1.0,
+        "confidence": 1.0
       },
       "signal_preservation": {
-        "preservation_rate": 0.8333333333333334,
-        "preserved_count": 5,
+        "preservation_rate": 0.16666666666666666,
+        "preserved_count": 1,
         "total_signals": 6
       },
-      "conversation_id": "project_excitement"
+      "conversation_id": "project_excitement_success"
     },
     {
-      "overall_loss": 1.0,
+      "overall_loss": 0.43600000000000005,
       "dimensional_loss": {
-        "fear": 1.0
+        "fear": 0.43600000000000005
       },
       "signal_preservation": {
         "preservation_rate": 0.0,
         "preserved_count": 0,
         "total_signals": 1
       },
-      "conversation_id": "budget_concern"
+      "conversation_id": "budget_negotiation_failure"
     },
     {
-      "overall_loss": 0.34800000000000003,
+      "overall_loss": 0.88,
       "dimensional_loss": {
-        "joy": 0.5,
-        "anticipation": 0.043999999999999984,
-        "excitement": 0.5
+        "joy": 0.64,
+        "anticipation": 1.0,
+        "excitement": 1.0
       },
       "signal_preservation": {
-        "preservation_rate": 0.3333333333333333,
-        "preserved_count": 1,
+        "preservation_rate": 0.0,
+        "preserved_count": 0,
         "total_signals": 3
       },
-      "conversation_id": "creative_energy"
+      "conversation_id": "creative_brainstorm_success"
     }
   ],
   "task_impact_analysis": [
     {
-      "conversation_id": "customer_support_frustration",
+      "conversation_id": "customer_support_failure",
       "task_success_rate": {
         "original_success": false,
         "compressed_success": null,
@@ -75,27 +75,27 @@
       "correlation": 0.0
     },
     {
-      "conversation_id": "project_excitement",
+      "conversation_id": "project_excitement_success",
       "task_success_rate": {
         "original_success": true,
         "compressed_success": true,
-        "success_rate": 0.4,
+        "success_rate": 0.7,
         "task_failure": false,
         "task_type": "project_planning"
       },
-      "emotional_loss": 0.1585,
+      "emotional_loss": 0.7443333333333334,
       "dimensional_loss": {
-        "joy": 0.5,
-        "trust": 0.03200000000000003,
-        "anticipation": 0.043999999999999984,
-        "excitement": 0.31100000000000005,
-        "satisfaction": 0.03200000000000003,
-        "confidence": 0.03200000000000003
+        "joy": 0.64,
+        "trust": 1.0,
+        "anticipation": 0.186,
+        "excitement": 0.64,
+        "satisfaction": 1.0,
+        "confidence": 1.0
       },
       "correlation": 0.0
     },
     {
-      "conversation_id": "budget_concern",
+      "conversation_id": "budget_negotiation_failure",
       "task_success_rate": {
         "original_success": true,
         "compressed_success": null,
@@ -103,26 +103,26 @@
         "task_failure": false,
         "task_type": "negotiation"
       },
-      "emotional_loss": 1.0,
+      "emotional_loss": 0.43600000000000005,
       "dimensional_loss": {
-        "fear": 1.0
+        "fear": 0.43600000000000005
       },
       "correlation": 0.0
     },
     {
-      "conversation_id": "creative_energy",
+      "conversation_id": "creative_brainstorm_success",
       "task_success_rate": {
         "original_success": true,
-        "compressed_success": null,
-        "success_rate": 0.5,
+        "compressed_success": true,
+        "success_rate": 0.6,
         "task_failure": false,
         "task_type": "brainstorming"
       },
-      "emotional_loss": 0.34800000000000003,
+      "emotional_loss": 0.88,
       "dimensional_loss": {
-        "joy": 0.5,
-        "anticipation": 0.043999999999999984,
-        "excitement": 0.5
+        "joy": 0.64,
+        "anticipation": 1.0,
+        "excitement": 1.0
       },
       "correlation": 0.0
     }
@@ -151,7 +151,7 @@
           "preserved_count": 1,
           "total_signals": 2
         },
-        "conversation_id": "customer_support_frustration",
+        "conversation_id": "customer_support_failure",
         "task_success_rate": {
           "original_success": false,
           "compressed_success": null,
@@ -163,42 +163,42 @@
         "correlation": 0.0
       },
       {
-        "overall_loss": 0.1585,
+        "overall_loss": 0.7443333333333334,
         "dimensional_loss": {
-          "joy": 0.5,
-          "trust": 0.03200000000000003,
-          "anticipation": 0.043999999999999984,
-          "excitement": 0.31100000000000005,
-          "satisfaction": 0.03200000000000003,
-          "confidence": 0.03200000000000003
+          "joy": 0.64,
+          "trust": 1.0,
+          "anticipation": 0.186,
+          "excitement": 0.64,
+          "satisfaction": 1.0,
+          "confidence": 1.0
         },
         "signal_preservation": {
-          "preservation_rate": 0.8333333333333334,
-          "preserved_count": 5,
+          "preservation_rate": 0.16666666666666666,
+          "preserved_count": 1,
           "total_signals": 6
         },
-        "conversation_id": "project_excitement",
+        "conversation_id": "project_excitement_success",
         "task_success_rate": {
           "original_success": true,
           "compressed_success": true,
-          "success_rate": 0.4,
+          "success_rate": 0.7,
           "task_failure": false,
           "task_type": "project_planning"
         },
-        "emotional_loss": 0.1585,
+        "emotional_loss": 0.7443333333333334,
         "correlation": 0.0
       },
       {
-        "overall_loss": 1.0,
+        "overall_loss": 0.43600000000000005,
         "dimensional_loss": {
-          "fear": 1.0
+          "fear": 0.43600000000000005
         },
         "signal_preservation": {
           "preservation_rate": 0.0,
           "preserved_count": 0,
           "total_signals": 1
         },
-        "conversation_id": "budget_concern",
+        "conversation_id": "budget_negotiation_failure",
         "task_success_rate": {
           "original_success": true,
           "compressed_success": null,
@@ -206,30 +206,30 @@
           "task_failure": false,
           "task_type": "negotiation"
         },
-        "emotional_loss": 1.0,
+        "emotional_loss": 0.43600000000000005,
         "correlation": 0.0
       },
       {
-        "overall_loss": 0.34800000000000003,
+        "overall_loss": 0.88,
         "dimensional_loss": {
-          "joy": 0.5,
-          "anticipation": 0.043999999999999984,
-          "excitement": 0.5
+          "joy": 0.64,
+          "anticipation": 1.0,
+          "excitement": 1.0
         },
         "signal_preservation": {
-          "preservation_rate": 0.3333333333333333,
-          "preserved_count": 1,
+          "preservation_rate": 0.0,
+          "preserved_count": 0,
           "total_signals": 3
         },
-        "conversation_id": "creative_energy",
+        "conversation_id": "creative_brainstorm_success",
         "task_success_rate": {
           "original_success": true,
-          "compressed_success": null,
-          "success_rate": 0.5,
+          "compressed_success": true,
+          "success_rate": 0.6,
           "task_failure": false,
           "task_type": "brainstorming"
         },
-        "emotional_loss": 0.34800000000000003,
+        "emotional_loss": 0.88,
         "correlation": 0.0
       }
     ],
@@ -246,7 +246,7 @@
     "high_impact_cases": []
   },
   "_metadata": {
-    "timestamp": "2025-10-28T22:09:12.623313",
+    "timestamp": "2025-10-28T22:14:35.943604",
     "filename": "emotional_audit_results.json"
   }
 }

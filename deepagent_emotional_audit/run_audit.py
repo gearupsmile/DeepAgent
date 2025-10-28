@@ -96,34 +96,45 @@ def analyze_task_outcome(conversation_text, task_type):
     # Task-specific success indicators
     task_indicators = {
         'customer_support': {
-            'success': ['fixed', 'resolved', 'working', 'thank you', 'grateful', 'helpful', 'solved'],
-            'failure': ['still broken', 'not working', 'frustrated', 'angry', 'useless', 'waste']
+            'success': ['fixed', 'resolved', 'working', 'thank you', 'grateful', 'helpful', 'solved', 'great', 'perfect'],
+            'failure': ['not working', 'broken', 'frustrated', 'angry', 'useless', 'waste', 'cancel', 'unsubscribe', 'horrible']
         },
         'project_planning': {
-            'success': ['agreed', 'timeline', 'deadline', 'confident', 'excited', 'motivated', 'plan'],
-            'failure': ['delay', 'behind', 'concerned', 'worried', 'unsure', 'problem']
+            'success': ['agreed', 'timeline', 'deadline', 'confident', 'excited', 'motivated', 'plan', 'ready', 'approved'],
+            'failure': ['delay', 'behind', 'concerned', 'worried', 'unsure', 'problem', 'issue', 'uncertain', 'risk']
         },
         'negotiation': {
-            'success': ['agreement', 'middle ground', 'compromise', 'deal', 'settled', 'acceptable'],
-            'failure': ['stuck', 'disagreement', 'walk away', 'unacceptable', 'reject']
+            'success': ['agreement', 'middle ground', 'compromise', 'deal', 'settled', 'acceptable', 'agreed', 'partnership'],
+            'failure': ['stuck', 'disagreement', 'walk away', 'unacceptable', 'reject', 'conflict', 'dispute', 'deadlock']
         },
         'brainstorming': {
-            'success': ['creative', 'excited', 'amazing', 'innovative', 'breakthrough', 'energy'],
-            'failure': ['stuck', 'blocked', 'uninspired', 'frustrated', 'confused']
+            'success': ['creative', 'excited', 'amazing', 'innovative', 'breakthrough', 'energy', 'great', 'wonderful', 'perfect'],
+            'failure': ['stuck', 'blocked', 'uninspired', 'frustrated', 'confused', 'nothing', 'empty', 'blank']
         }
     }
     
     indicators = task_indicators.get(task_type, {'success': [], 'failure': []})
     
-    success_count = sum(1 for word in indicators['success'] if word in text_lower)
-    failure_count = sum(1 for word in indicators['failure'] if word in text_lower)
+    success_words = [word for word in indicators['success'] if word in text_lower]
+    failure_words = [word for word in indicators['failure'] if word in text_lower]
+    
+    success_count = len(success_words)
+    failure_count = len(failure_words)
     
     if success_count > failure_count:
-        return {'success': True, 'success_rate': min(0.2 + (success_count * 0.2), 1.0)}
+        success_rate = min(0.5 + (success_count * 0.1), 1.0)
+        return {'success': True, 'success_rate': success_rate}
     elif failure_count > success_count:
-        return {'success': False, 'success_rate': max(0.1 - (failure_count * 0.1), 0.0)}
+        success_rate = max(0.1 - (failure_count * 0.1), 0.0)
+        return {'success': False, 'success_rate': success_rate}
     else:
-        return {'success': None, 'success_rate': 0.5}
+        # If equal or no clear indicators, use emotional tone
+        if any(word in text_lower for word in ['frustrated', 'angry', 'worried', 'concerned']):
+            return {'success': False, 'success_rate': 0.3}
+        elif any(word in text_lower for word in ['excited', 'happy', 'confident', 'great']):
+            return {'success': True, 'success_rate': 0.7}
+        else:
+            return {'success': None, 'success_rate': 0.5}
 
 def calculate_correlation(loss_data, task_success):
     """Calculate correlation between emotional loss and task failure"""
